@@ -1,0 +1,48 @@
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+  previewFeatures = ["fullTextSearchPostgres"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+
+model User{
+  id Int @id @default(autoincrement())
+  name String?
+  email String @unique
+  password String?
+  posts Post[]
+  comments Comment[]
+  created_at DateTime @default(now())
+}
+
+
+
+model Post{
+  id Int @id @default(autoincrement())
+  title String?
+  content String?
+  user_id Int
+  user User  @relation(fields: [user_id] , references: [id] ,onDelete: Cascade)
+  comment_count Int @default(0)
+  comments Comment[]
+  created_at DateTime @default(now())
+}
+
+
+model Comment {
+  id String @id  @default(uuid())
+  post_id Int 
+  post Post @relation(fields: [post_id],references: [id] , onDelete: Cascade)
+  user_id Int
+  user User @relation(fields: [user_id],references: [id] , onDelete: Cascade)
+  comment String
+  created_at DateTime @default(now())
+}
