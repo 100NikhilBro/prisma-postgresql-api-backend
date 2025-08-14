@@ -1,11 +1,13 @@
 const express = require('express');
 require('dotenv').config();
 const morgan = require('morgan');
+const helmet = require('helmet');
 
 const app = express();
 
 const PORT = process.env.PORT || 7890;
 
+app.use(helmet());
 app.use(morgan('dev'));
 
 app.use(express.json());
