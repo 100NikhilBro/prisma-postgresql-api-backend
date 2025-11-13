@@ -19,7 +19,7 @@ exports.createComment = async(req, res) => {
         })
 
         if (!existingPost) {
-            return
+            return 
         }
 
         const { comment } = req.body;
@@ -64,12 +64,10 @@ exports.createComment = async(req, res) => {
 
 exports.updateComment = async(req, res) => {
     try {
-
-
+        
         const userId = req.params.id;
         const postId = req.params.pid;
         const commentId = req.params.cid;
-
 
         if (!userId || !postId || !commentId) {
             return
